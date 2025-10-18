@@ -1,0 +1,47 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Visual Studio
+.vs
+.vscode
+*.user
+*.suo
+
+# Build output
+bin/
+obj/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.local
+secrets.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.swp
+*.swo
+
+# Documentation
+README.md
+LICENSE
+CHANGELOG.md
+
+# Tests (optional - include if you want tests in image)
+# tests/
+
+# Dependencies cache
+.nuget/
+packages/
