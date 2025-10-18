@@ -82,3 +82,15 @@ k8s/
 # Logs
 logs/
 *.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+ENV/

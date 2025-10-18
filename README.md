@@ -102,6 +102,21 @@ make clean      # Remove containers and volumes
 
 ## Available Commands
 
+### Status & Validation
+
+Auto-detect and validate running services:
+
+```bash
+make status
+```
+
+Automatically detects if Docker Compose or Kubernetes is running and validates all service connections:
+- PostgreSQL
+- Redis
+- Kafka
+- RabbitMQ
+- API
+
 ### Docker Compose
 
 ```bash
@@ -114,9 +129,10 @@ make clean      # Remove containers and volumes
 ### Kubernetes/Helm
 
 ```bash
-make k3d-create      # Create k3d cluster
-make helm-install    # Deploy with Helm
-make helm-status     # Check deployment
+make k3d-create      # Create k3d cluster with local registry
+make helm-install    # Build, push and install Helm chart
+make helm-status     # Check deployment status
+make helm-upgrade    # Rebuild and upgrade release
 make helm-uninstall  # Remove deployment
 make k3d-delete      # Delete cluster
 ```
