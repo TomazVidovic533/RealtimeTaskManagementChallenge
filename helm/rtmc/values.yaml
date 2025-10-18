@@ -1,0 +1,125 @@
+global:
+  environment: development
+  namespace: rtmc
+
+postgres:
+  enabled: true
+  image:
+    repository: postgres
+    tag: 17-alpine
+    pullPolicy: IfNotPresent
+  auth:
+    username: admin
+    password: password123
+    database: TaskManagementDb
+  service:
+    type: ClusterIP
+    port: 5432
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+redis:
+  enabled: true
+  image:
+    repository: redis
+    tag: 7.4-alpine
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 6379
+  persistence:
+    enabled: true
+    size: 500Mi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+kafka:
+  enabled: true
+  image:
+    repository: confluentinc/cp-kafka
+    tag: 7.6.1
+    pullPolicy: IfNotPresent
+  kraft:
+    enabled: true
+    clusterId: MkU3OEVBNTcwNTJENDM2Qk
+  service:
+    type: ClusterIP
+    port: 9092
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+rabbitmq:
+  enabled: true
+  image:
+    repository: rabbitmq
+    tag: 4.0-management-alpine
+    pullPolicy: IfNotPresent
+  auth:
+    username: admin
+    password: password123
+  service:
+    type: ClusterIP
+    port: 5672
+    managementPort: 15672
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "400m"
+
+api:
+  enabled: true
+  image:
+    repository: rtmc-registry:5000/rtmc/api
+    tag: latest
+    pullPolicy: Always
+  replicas: 1
+  service:
+    type: LoadBalancer
+    port: 8080
+  env:
+    aspnetcoreEnvironment: Development
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: rtmc.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []

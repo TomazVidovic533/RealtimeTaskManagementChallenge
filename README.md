@@ -102,37 +102,23 @@ make clean      # Remove containers and volumes
 
 ## Available Commands
 
-### Make Commands
+### Docker Compose
 
 ```bash
-make build      # Build Docker images
-make rebuild    # Clean rebuild (no cache)
 make start      # Start all services
 make stop       # Stop all services
-make down       # Stop and remove containers
 make logs       # View service logs
-make ps         # List running containers
 make clean      # Remove containers and volumes
 ```
 
-### Docker Commands
+### Kubernetes/Helm
 
 ```bash
-docker-compose up -d                    # Start detached
-docker-compose logs -f                  # Follow logs
-docker-compose ps                       # List containers
-docker-compose down                     # Stop and remove
-docker-compose down -v                  # Remove with volumes
-```
-
-### .NET Commands
-
-```bash
-dotnet build                            # Build solution
-dotnet test                             # Run tests
-dotnet ef migrations add MigrationName  # Create migration
-dotnet ef database update               # Apply migrations
-dotnet run --project src/TaskManagement.API/  # Run API
+make k3d-create      # Create k3d cluster
+make helm-install    # Deploy with Helm
+make helm-status     # Check deployment
+make helm-uninstall  # Remove deployment
+make k3d-delete      # Delete cluster
 ```
 
 ## Project Structure

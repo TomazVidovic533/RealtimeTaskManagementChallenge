@@ -1,0 +1,14 @@
+apiVersion: v2
+name: rtmc
+description: Real-Time Task Management Challenge - Kubernetes Deployment
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - task-management
+  - real-time
+  - signalr
+  - kafka
+  - rabbitmq
+maintainers:
+  - name: Your Name
