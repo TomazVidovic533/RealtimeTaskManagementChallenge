@@ -39,8 +39,8 @@ README.md
 LICENSE
 CHANGELOG.md
 
-# Tests (optional - include if you want tests in image)
-# tests/
+# Tests
+tests/
 
 # Dependencies cache
 .nuget/
