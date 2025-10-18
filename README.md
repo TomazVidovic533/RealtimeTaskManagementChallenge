@@ -1,61 +1,200 @@
-# Real-Time Task Management API
+# Real-Time Task Management Challenge
 
-## What Is This?
+A production-grade task management API demonstrating distributed systems architecture with real-time collaboration capabilities.
 
-A task management system where multiple users can work on tasks together in real-time. When one user creates or updates a task, everyone sees the changes instantlyno page refresh needed.
+## Overview
 
-## Why Build This?
+This project showcases a multi-user task management system where changes propagate instantly across all connected clients. Built with modern distributed architecture patterns, it demonstrates proficiency in event-driven design, real-time communication, and scalable system implementation.
 
-To demonstrate how to combine multiple modern technologies into a single cohesive system:
+## Architecture
 
-- **Real-time communication** using WebSockets (SignalR)
-- **Event-driven architecture** with Kafka and RabbitMQ
-- **Distributed caching** with Redis
-- **Clean code** with .NET and Domain-Driven Design
-- **React frontend** connected to .NET backend
+The system combines multiple technologies to create a cohesive, scalable solution:
 
-## Tech Stack
+- **Real-time Communication**: WebSocket-based updates via SignalR
+- **Event-Driven Architecture**: Kafka for event streaming, RabbitMQ for message routing
+- **Distributed Caching**: Redis for performance and SignalR backplane
+- **Clean Architecture**: Domain-Driven Design with vertical slice features
+- **CQRS Pattern**: Separate command and query responsibilities
 
-- **.NET 9** - Backend framework
-- **PostgreSQL** - Database
-- **Redis** - Caching and real-time backplane
-- **SignalR** - WebSocket for instant updates
-- **Kafka** - Event streaming
-- **RabbitMQ** - Message queues
-- **React** - Frontend UI
-- **Docker** - Containerization
+## Technology Stack
 
-## How It Works (Theory)
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| Backend | .NET 9 | Web API framework |
+| Database | PostgreSQL 17 | Primary data store |
+| Caching | Redis 7.4 | Distributed cache and SignalR backplane |
+| Messaging | Kafka 3.8 | High-throughput event streaming |
+| Queue | RabbitMQ 4.0 | Reliable message delivery |
+| Real-time | SignalR | WebSocket communication |
+| Frontend | React | User interface |
+| Infrastructure | Docker | Containerization |
 
-1. User creates a task � API receives request
-2. Domain logic processes it � Creates a domain event
-3. Event published � Goes to Kafka (for analytics) and RabbitMQ (for routing)
-4. SignalR broadcasts � All connected browsers get the update instantly
-5. React updates UI � User sees changes in real-time
+## System Flow
 
-## Running It
-
-```bash
-# Start all services (PostgreSQL, Redis, Kafka, RabbitMQ)
-docker-compose up -d
-
-# Run database migrations
-dotnet ef database update
-
-# Start the API
-dotnet run --project src/TaskManagement.API/
-
-# Start React frontend (separate terminal)
-cd react-app && npm start
+```
+User Action → API Endpoint → Domain Logic → Event Published
+                                              ↓
+                                          Kafka (Analytics)
+                                              ↓
+                                          RabbitMQ (Routing)
+                                              ↓
+                                          SignalR Hub
+                                              ↓
+                                     All Connected Clients
 ```
 
-## Goal
+## Prerequisites
 
-Show that you understand:
-- How to architect a large system
-- How to make things work in real-time
-- How to handle events at scale
-- How to keep code clean and maintainable
-- How different technologies work together
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [Node.js 18+](https://nodejs.org/) (for React frontend)
+- Make (optional, for simplified commands)
 
-This is a **portfolio project** demonstrating senior-level .NET and distributed systems knowledge.
+## Getting Started
+
+### Quick Start with Make
+
+```bash
+make help       # Display all available commands
+make start      # Start all services
+make logs       # View service logs
+make stop       # Stop all services
+make clean      # Remove containers and volumes
+```
+
+### Manual Setup
+
+1. **Start Infrastructure**
+   ```bash
+   docker-compose up -d
+   ```
+
+2. **Apply Database Migrations**
+   ```bash
+   cd src/TaskManagement.API
+   dotnet ef database update
+   ```
+
+3. **Run API**
+   ```bash
+   dotnet run --project src/TaskManagement.API/
+   ```
+
+4. **Start Frontend** (separate terminal)
+   ```bash
+   cd react-app
+   npm install
+   npm start
+   ```
+
+## Service Endpoints
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| API | http://localhost:8080 | - |
+| API (HTTPS) | https://localhost:8081 | - |
+| Swagger UI | http://localhost:8080/swagger | - |
+| PostgreSQL | localhost:5432 | admin / password123 |
+| Redis | localhost:6379 | - |
+| Kafka | localhost:9092 | - |
+| RabbitMQ AMQP | localhost:5672 | admin / password123 |
+| RabbitMQ Management | http://localhost:15672 | admin / password123 |
+
+## Available Commands
+
+### Make Commands
+
+```bash
+make build      # Build Docker images
+make rebuild    # Clean rebuild (no cache)
+make start      # Start all services
+make stop       # Stop all services
+make down       # Stop and remove containers
+make logs       # View service logs
+make ps         # List running containers
+make clean      # Remove containers and volumes
+```
+
+### Docker Commands
+
+```bash
+docker-compose up -d                    # Start detached
+docker-compose logs -f                  # Follow logs
+docker-compose ps                       # List containers
+docker-compose down                     # Stop and remove
+docker-compose down -v                  # Remove with volumes
+```
+
+### .NET Commands
+
+```bash
+dotnet build                            # Build solution
+dotnet test                             # Run tests
+dotnet ef migrations add MigrationName  # Create migration
+dotnet ef database update               # Apply migrations
+dotnet run --project src/TaskManagement.API/  # Run API
+```
+
+## Project Structure
+
+```
+src/
+├── TaskManagement.API/          # API entry point
+├── TaskManagement.Shared/       # Shared infrastructure
+└── Features/                    # Vertical slice features
+    ├── Tasks/                   # Task management
+    ├── Users/                   # User authentication
+    ├── Teams/                   # Team collaboration
+    ├── Comments/                # Task discussions
+    └── Notifications/           # Real-time notifications
+```
+
+## Features
+
+- **Task Management**: Create, update, assign, and track tasks
+- **Real-time Updates**: Instant propagation of changes to all clients
+- **Team Collaboration**: Multi-user workspaces with role-based access
+- **Event Sourcing**: Complete audit trail of all domain events
+- **Distributed Architecture**: Horizontally scalable design
+- **Clean Code**: Domain-Driven Design principles throughout
+
+## Development
+
+### Running Tests
+
+```bash
+dotnet test
+```
+
+### Database Migrations
+
+```bash
+cd src/TaskManagement.API
+dotnet ef migrations add MigrationName
+dotnet ef database update
+```
+
+### Monitoring Services
+
+```bash
+# View all logs
+docker-compose logs -f
+
+# View specific service
+docker-compose logs -f api
+docker-compose logs -f postgres
+
+# Check service health
+docker-compose ps
+```
+
+## Project Goals
+
+This project demonstrates:
+
+- **Architecture Skills**: Clean architecture, DDD, CQRS patterns
+- **Distributed Systems**: Event-driven design with Kafka and RabbitMQ
+- **Real-time Systems**: WebSocket implementation with SignalR
+- **Scalability**: Horizontal scaling with Redis backplane
+- **Modern .NET**: Latest framework features and best practices
+- **Full-Stack Integration**: Backend and frontend working seamlessly
