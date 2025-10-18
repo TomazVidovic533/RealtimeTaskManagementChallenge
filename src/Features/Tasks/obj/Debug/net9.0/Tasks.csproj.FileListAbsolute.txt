@@ -1,0 +1,11 @@
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/bin/Debug/net9.0/Tasks.deps.json
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/bin/Debug/net9.0/Tasks.dll
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/bin/Debug/net9.0/Tasks.pdb
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.AssemblyInfoInputs.cache
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.AssemblyInfo.cs
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.csproj.CoreCompileInputs.cache
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.dll
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/refint/Tasks.dll
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/Tasks.pdb
+/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/obj/Debug/net9.0/ref/Tasks.dll

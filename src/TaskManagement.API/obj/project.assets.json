@@ -1,0 +1,264 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0": {
+      "Microsoft.AspNetCore.OpenApi/9.0.8": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.17"
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Microsoft.OpenApi/1.6.17": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Comments/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Comments.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Comments.dll": {}
+        }
+      },
+      "Notifications/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Notifications.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Notifications.dll": {}
+        }
+      },
+      "TaskManagement.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/TaskManagement.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TaskManagement.Shared.dll": {}
+        }
+      },
+      "Tasks/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Tasks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tasks.dll": {}
+        }
+      },
+      "Teams/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Teams.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Teams.dll": {}
+        }
+      },
+      "Users/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Users.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Users.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.AspNetCore.OpenApi/9.0.8": {
+      "sha512": "BwF9sQCKmvu93C/pmKxJjPhF5fFB23MEcgTsGL+7W3wKLYawS4lyFSL5/qh00IJzuADLf+1SmvxMaphbyZYqQQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.openapi/9.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.xml",
+        "microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
+        "microsoft.aspnetcore.openapi.nuspec"
+      ]
+    },
+    "Microsoft.OpenApi/1.6.17": {
+      "sha512": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA==",
+      "type": "package",
+      "path": "microsoft.openapi/1.6.17",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/netstandard2.0/Microsoft.OpenApi.dll",
+        "lib/netstandard2.0/Microsoft.OpenApi.pdb",
+        "lib/netstandard2.0/Microsoft.OpenApi.xml",
+        "microsoft.openapi.1.6.17.nupkg.sha512",
+        "microsoft.openapi.nuspec"
+      ]
+    },
+    "Comments/1.0.0": {
+      "type": "project",
+      "path": "../Features/Comments/Comments.csproj",
+      "msbuildProject": "../Features/Comments/Comments.csproj"
+    },
+    "Notifications/1.0.0": {
+      "type": "project",
+      "path": "../Features/Notifications/Notifications.csproj",
+      "msbuildProject": "../Features/Notifications/Notifications.csproj"
+    },
+    "TaskManagement.Shared/1.0.0": {
+      "type": "project",
+      "path": "../TaskManagement.Shared/TaskManagement.Shared.csproj",
+      "msbuildProject": "../TaskManagement.Shared/TaskManagement.Shared.csproj"
+    },
+    "Tasks/1.0.0": {
+      "type": "project",
+      "path": "../Features/Tasks/Tasks.csproj",
+      "msbuildProject": "../Features/Tasks/Tasks.csproj"
+    },
+    "Teams/1.0.0": {
+      "type": "project",
+      "path": "../Features/Teams/Teams.csproj",
+      "msbuildProject": "../Features/Teams/Teams.csproj"
+    },
+    "Users/1.0.0": {
+      "type": "project",
+      "path": "../Features/Users/Users.csproj",
+      "msbuildProject": "../Features/Users/Users.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0": [
+      "Comments >= 1.0.0",
+      "Microsoft.AspNetCore.OpenApi >= 9.0.8",
+      "Notifications >= 1.0.0",
+      "TaskManagement.Shared >= 1.0.0",
+      "Tasks >= 1.0.0",
+      "Teams >= 1.0.0",
+      "Users >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/tomazwork/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.API/TaskManagement.API.csproj",
+      "projectName": "TaskManagement.API",
+      "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.API/TaskManagement.API.csproj",
+      "packagesPath": "/Users/tomazwork/.nuget/packages/",
+      "outputPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.API/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/tomazwork/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0"
+      ],
+      "sources": {
+        "/opt/homebrew/Cellar/dotnet/9.0.8/libexec/library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "projectReferences": {
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Comments/Comments.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Comments/Comments.csproj"
+            },
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Notifications/Notifications.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Notifications/Notifications.csproj"
+            },
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/Tasks.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Tasks/Tasks.csproj"
+            },
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Teams/Teams.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Teams/Teams.csproj"
+            },
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Users/Users.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/Features/Users/Users.csproj"
+            },
+            "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.Shared/TaskManagement.Shared.csproj": {
+              "projectPath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.Shared/TaskManagement.Shared.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
+    },
+    "frameworks": {
+      "net9.0": {
+        "targetAlias": "net9.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.OpenApi": {
+            "target": "Package",
+            "version": "[9.0.8, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.8/libexec/sdk/9.0.109/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

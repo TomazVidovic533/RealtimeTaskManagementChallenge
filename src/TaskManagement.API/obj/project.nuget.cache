@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "V8M4ex4Qizc=",
+  "success": true,
+  "projectFilePath": "/Users/tomazwork/learning-galaxy/projects/01_realtime_task_management/src/TaskManagement.API/TaskManagement.API.csproj",
+  "expectedPackageFiles": [
+    "/Users/tomazwork/.nuget/packages/microsoft.aspnetcore.openapi/9.0.8/microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
+    "/Users/tomazwork/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
