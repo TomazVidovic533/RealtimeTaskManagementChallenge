@@ -113,6 +113,25 @@ api:
       memory: "512Mi"
       cpu: "500m"
 
+frontend:
+  enabled: true
+  image:
+    repository: rtmc-registry:5000/rtmc/frontend
+    tag: latest
+    pullPolicy: Always
+  replicas: 1
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30081
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
 ingress:
   enabled: false
   className: nginx

@@ -78,9 +78,9 @@ docker-start:
 	@echo "$(GREEN)All services started!$(RESET)"
 	@echo ""
 	@echo "$(CYAN)Access points:$(RESET)"
+	@echo "  $(YELLOW)Frontend:$(RESET)       http://localhost:3001"
 	@echo "  $(YELLOW)API:$(RESET)            http://localhost:8080"
 	@echo "  $(YELLOW)Swagger:$(RESET)        http://localhost:8080/swagger"
-	@echo "  $(YELLOW)Frontend:$(RESET)       http://localhost:5173 (run 'make frontend-dev' separately)"
 	@echo "  $(YELLOW)RabbitMQ:$(RESET)       http://localhost:15672 (admin / password123)"
 	@echo "  $(YELLOW)Grafana:$(RESET)        http://localhost:3000 (admin / admin123)"
 	@echo "  $(YELLOW)Elasticsearch:$(RESET)  http://localhost:9200 (elastic / elastic123)"
@@ -104,10 +104,12 @@ docker-clean:
 # Kubernetes (k3d) commands
 k3d-build:
 	@echo "$(YELLOW)Building images for k3d...$(RESET)"
-	@$(DOCKER_COMPOSE) build api
+	@$(DOCKER_COMPOSE) build api frontend
 	@echo "$(YELLOW)Tagging and pushing to local registry...$(RESET)"
 	@docker tag rtmc-api:latest localhost:35000/rtmc/api:latest
+	@docker tag rtmc-frontend:latest localhost:35000/rtmc/frontend:latest
 	@docker push localhost:35000/rtmc/api:latest
+	@docker push localhost:35000/rtmc/frontend:latest
 	@echo "$(GREEN)Images ready for k3d!$(RESET)"
 
 k3d-start:
@@ -118,9 +120,9 @@ k3d-start:
 	@echo "$(GREEN)k3d cluster started and services deployed!$(RESET)"
 	@echo ""
 	@echo "$(CYAN)Access points:$(RESET)"
+	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:30081"
 	@echo "  $(YELLOW)API:$(RESET)         http://localhost:30080"
 	@echo "  $(YELLOW)Swagger:$(RESET)     http://localhost:30080/swagger"
-	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:5173 (run 'make frontend-dev' separately)"
 	@echo ""
 	@echo "$(CYAN)Useful commands:$(RESET)"
 	@echo "  kubectl get all       - View all resources"

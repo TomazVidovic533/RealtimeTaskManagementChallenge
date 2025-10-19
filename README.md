@@ -58,21 +58,25 @@ User Action → API Endpoint → Domain Logic → Event Published
 
 ```bash
 make docker-build    # Build all Docker images
-make docker-start    # Start all services
-make frontend-dev    # Start frontend (in separate terminal)
+make docker-start    # Start all services (includes frontend)
 ```
 
 Access points:
+- Frontend: http://localhost:3001
 - API: http://localhost:8080
 - Swagger: http://localhost:8080/swagger
-- Frontend: http://localhost:5173
 
 ### Option 2: Kubernetes (k3d)
 
 ```bash
-make k3d-start       # Create cluster and deploy services
-make frontend-dev    # Start frontend (in separate terminal)
+make k3d-build       # Build and push images
+make k3d-start       # Create cluster and deploy services (includes frontend)
 ```
+
+Access points:
+- Frontend: http://localhost:30081
+- API: http://localhost:30080
+- Swagger: http://localhost:30080/swagger
 
 ### Option 3: Local Development
 
