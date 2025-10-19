@@ -112,13 +112,14 @@ k3d-start:
 	@echo "$(GREEN)k3d cluster started and services deployed!$(RESET)"
 	@echo ""
 	@echo "$(CYAN)Access points:$(RESET)"
-	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:30081"
+	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:3001"
 	@echo "  $(YELLOW)API:$(RESET)         http://localhost:8080"
 	@echo "  $(YELLOW)Swagger:$(RESET)     http://localhost:8080/swagger"
 	@echo ""
 	@echo "$(CYAN)Useful commands:$(RESET)"
 	@echo "  kubectl get all       - View all resources"
-	@echo "  make k3d-logs         - View API logs"
+	@echo "  make k3d-status       - View cluster status"
+	@echo "  make k3d-logs         - View all pod logs"
 
 k3d-update:
 	@echo "$(YELLOW)Rebuilding images...$(RESET)"

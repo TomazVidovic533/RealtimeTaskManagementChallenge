@@ -72,7 +72,7 @@ def test_api():
     return success
 
 def test_frontend():
-    success, _ = run_cmd("curl -sf http://localhost:30081 > /dev/null 2>&1")
+    success, _ = run_cmd("curl -sf http://localhost:3001 > /dev/null 2>&1")
     return success
 
 def main():
@@ -131,7 +131,7 @@ def main():
         console.print("[yellow]Run 'make status' again in a minute or check: make k3d-status[/yellow]\n")
 
     console.print("\n[bold cyan]Endpoints:[/bold cyan]")
-    console.print("  [blue]Frontend:[/blue]       http://localhost:30081")
+    console.print("  [blue]Frontend:[/blue]       http://localhost:3001")
     console.print("  [blue]API:[/blue]            http://localhost:8080")
     console.print("  [blue]Swagger:[/blue]        http://localhost:8080/swagger")
     console.print("\n[bold cyan]Port Forwarding (internal services):[/bold cyan]")

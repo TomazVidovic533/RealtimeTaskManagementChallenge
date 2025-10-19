@@ -18,7 +18,7 @@ def main():
         "k3d", "cluster", "create", "rtmc",
         "--registry-create", "rtmc-registry:0.0.0.0:35000",
         "--port", "8080:8080@loadbalancer",
-        "--port", "30081:30081@server:0",
+        "--port", "3001:30081@server:0",
         "--port", "5432:5432@loadbalancer",
         "--port", "6379:6379@loadbalancer",
         "--port", "9092:9092@loadbalancer",
