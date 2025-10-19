@@ -22,6 +22,9 @@ spec:
       - name: frontend
         image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
         imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+        env:
+        - name: API_HOST
+          value: {{ include "rtmc.fullname" . }}-api
         ports:
         - name: http
           containerPort: 80
