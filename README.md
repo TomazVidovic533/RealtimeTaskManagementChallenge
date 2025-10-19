@@ -1,10 +1,10 @@
-# Real-Time Task Management Challenge
+# Real-time Task Management System
 
-A production-grade task management API demonstrating distributed systems architecture with real-time collaboration capabilities.
+Portfolio project showcasing .NET 9 + React 19 + SignalR + Kafka + RabbitMQ + Redis in a production-grade, real-time task management system.
 
 ## Overview
 
-This project showcases a multi-user task management system where changes propagate instantly across all connected clients. Built with modern distributed architecture patterns, it demonstrates proficiency in event-driven design, real-time communication, and scalable system implementation.
+This project demonstrates a full-stack, event-driven task management system with real-time collaboration capabilities. It showcases data engineering and backend skills through distributed architecture, event streaming, and scalable system design.
 
 ## Architecture
 
@@ -52,40 +52,39 @@ User Action → API Endpoint → Domain Logic → Event Published
 
 ## Getting Started
 
-### Quick Start with Make
+### Option 1: Docker (Recommended)
 
 ```bash
-make help       # Display all available commands
-make start      # Start all services
-make logs       # View service logs
-make stop       # Stop all services
-make clean      # Remove containers and volumes
+make docker-build    # Build all Docker images
+make docker-start    # Start all services
+make frontend-dev    # Start frontend (in separate terminal)
 ```
 
-### Manual Setup
+Access points:
+- API: http://localhost:8080
+- Swagger: http://localhost:8080/swagger
+- Frontend: http://localhost:5173
 
-1. **Start Infrastructure**
-   ```bash
-   docker-compose up -d
-   ```
+### Option 2: Kubernetes (k3d)
 
-2. **Apply Database Migrations**
-   ```bash
-   cd src/TaskManagement.API
-   dotnet ef database update
-   ```
+```bash
+make k3d-start       # Create cluster and deploy services
+make frontend-dev    # Start frontend (in separate terminal)
+```
 
-3. **Run API**
-   ```bash
-   dotnet run --project src/TaskManagement.API/
-   ```
+### Option 3: Local Development
 
-4. **Start Frontend** (separate terminal)
-   ```bash
-   cd react-app
-   npm install
-   npm start
-   ```
+**Backend:**
+```bash
+make backend-build
+make backend-run
+```
+
+**Frontend:**
+```bash
+make frontend-install
+make frontend-dev
+```
 
 ## Service Endpoints
 
@@ -100,103 +99,78 @@ make clean      # Remove containers and volumes
 | RabbitMQ AMQP | localhost:5672 | admin / password123 |
 | RabbitMQ Management | http://localhost:15672 | admin / password123 |
 
-## Available Commands
-
-### Status & Validation
-
-Auto-detect and validate running services:
+## Commands
 
 ```bash
-make status
-```
+make help              # Show all commands
 
-Automatically detects if Docker Compose or Kubernetes is running and validates all service connections:
-- PostgreSQL
-- Redis
-- Kafka
-- RabbitMQ
-- API
+# Local Development
+make backend-build     # Build backend
+make backend-run       # Run API locally
+make backend-test      # Run tests
+make frontend-install  # Install frontend dependencies
+make frontend-dev      # Start frontend dev server
 
-### Docker Compose
+# Docker
+make docker-build      # Build all Docker images
+make docker-start      # Start all services
+make docker-stop       # Stop services
+make docker-logs       # View logs
+make docker-clean      # Clean everything
 
-```bash
-make start      # Start all services
-make stop       # Stop all services
-make logs       # View service logs
-make clean      # Remove containers and volumes
-```
-
-### Kubernetes/Helm
-
-```bash
-make k3d-create      # Create k3d cluster with local registry
-make helm-install    # Build, push and install Helm chart
-make helm-status     # Check deployment status
-make helm-upgrade    # Rebuild and upgrade release
-make helm-uninstall  # Remove deployment
-make k3d-delete      # Delete cluster
+# Kubernetes (k3d)
+make k3d-build         # Build and push images
+make k3d-start         # Create cluster and deploy
+make k3d-stop          # Stop cluster
+make k3d-logs          # View API logs
+make k3d-clean         # Full cleanup
 ```
 
 ## Project Structure
 
 ```
-src/
-├── TaskManagement.API/          # API entry point
-├── TaskManagement.Shared/       # Shared infrastructure
-└── Features/                    # Vertical slice features
-    ├── Tasks/                   # Task management
-    ├── Users/                   # User authentication
-    ├── Teams/                   # Team collaboration
-    ├── Comments/                # Task discussions
-    └── Notifications/           # Real-time notifications
+01_realtime_task_management/
+├── backend/              # .NET 9 Web API
+│   ├── src/              # Source code
+│   ├── tests/            # Unit & integration tests
+│   └── README.md
+├── frontend/             # React 19 + Vite
+│   ├── src/              # Source code
+│   └── README.md
+├── infrastructure/       # DevOps & Deployment
+│   ├── docker/           # Docker Compose
+│   ├── helm/             # Kubernetes Helm charts
+│   ├── scripts/          # Automation scripts
+│   └── README.md
+└── docs/                 # Documentation
+    ├── USE_CASES.md
+    ├── Specifications.md
+    └── Commands.md
 ```
 
-## Features
+## Key Features
 
 - **Task Management**: Create, update, assign, and track tasks
-- **Real-time Updates**: Instant propagation of changes to all clients
+- **Real-time Updates**: Instant propagation of changes via SignalR
 - **Team Collaboration**: Multi-user workspaces with role-based access
 - **Event Sourcing**: Complete audit trail of all domain events
 - **Distributed Architecture**: Horizontally scalable design
-- **Clean Code**: Domain-Driven Design principles throughout
+- **Clean Architecture**: Domain-Driven Design principles throughout
 
-## Development
+## Documentation
 
-### Running Tests
+- [Use Cases](docs/USE_CASES.md) - System use cases and scenarios
+- [Specifications](docs/Specifications.md) - Technical specifications
+- [Backend README](backend/README.md) - Backend setup and architecture
+- [Frontend README](frontend/README.md) - Frontend setup and development
+- [Infrastructure README](infrastructure/README.md) - DevOps and deployment
 
-```bash
-dotnet test
-```
+## What This Project Demonstrates
 
-### Database Migrations
-
-```bash
-cd src/TaskManagement.API
-dotnet ef migrations add MigrationName
-dotnet ef database update
-```
-
-### Monitoring Services
-
-```bash
-# View all logs
-docker-compose logs -f
-
-# View specific service
-docker-compose logs -f api
-docker-compose logs -f postgres
-
-# Check service health
-docker-compose ps
-```
-
-## Project Goals
-
-This project demonstrates:
-
-- **Architecture Skills**: Clean architecture, DDD, CQRS patterns
-- **Distributed Systems**: Event-driven design with Kafka and RabbitMQ
+- **Data Engineering**: Event streaming with Kafka, message queuing with RabbitMQ
+- **Backend Architecture**: Clean Architecture, DDD, CQRS patterns
+- **Distributed Systems**: Event-driven design, horizontal scaling with Redis
 - **Real-time Systems**: WebSocket implementation with SignalR
-- **Scalability**: Horizontal scaling with Redis backplane
-- **Modern .NET**: Latest framework features and best practices
-- **Full-Stack Integration**: Backend and frontend working seamlessly
+- **Modern .NET**: Latest .NET 9 features and best practices
+- **Full-Stack Development**: Seamless backend and frontend integration
+- **DevOps**: Docker, Kubernetes, Helm deployment strategies
