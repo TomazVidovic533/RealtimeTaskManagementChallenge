@@ -1,4 +1,4 @@
-.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-start k3d-update k3d-stop k3d-logs k3d-clean
+.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-start k3d-update k3d-stop k3d-status k3d-logs k3d-logs-api k3d-logs-frontend k3d-logs-postgres k3d-logs-redis k3d-logs-kafka k3d-logs-rabbitmq k3d-logs-elasticsearch k3d-logs-grafana k3d-clean
 
 # Colors
 CYAN := \033[0;36m
@@ -28,8 +28,10 @@ help:
 	@echo "$(YELLOW)Kubernetes (k3d):$(RESET)"
 	@echo "  make k3d-start        - Create cluster and deploy all services (first time)"
 	@echo "  make k3d-update       - Rebuild images and upgrade deployment (after code changes)"
+	@echo "  make k3d-status       - View k3d cluster status"
+	@echo "  make k3d-logs         - View all pod logs in k3d"
+	@echo "  make k3d-logs-<svc>   - View specific service logs (api, frontend, postgres, etc.)"
 	@echo "  make k3d-stop         - Stop and remove k3d cluster"
-	@echo "  make k3d-logs         - View API logs in k3d"
 	@echo "  make k3d-clean        - Full k3d cleanup"
 	@echo ""
 	@echo "$(YELLOW)Other:$(RESET)"
@@ -111,8 +113,8 @@ k3d-start:
 	@echo ""
 	@echo "$(CYAN)Access points:$(RESET)"
 	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:30081"
-	@echo "  $(YELLOW)API:$(RESET)         http://localhost:30080"
-	@echo "  $(YELLOW)Swagger:$(RESET)     http://localhost:30080/swagger"
+	@echo "  $(YELLOW)API:$(RESET)         http://localhost:8080"
+	@echo "  $(YELLOW)Swagger:$(RESET)     http://localhost:8080/swagger"
 	@echo ""
 	@echo "$(CYAN)Useful commands:$(RESET)"
 	@echo "  kubectl get all       - View all resources"
@@ -140,8 +142,40 @@ k3d-stop:
 	@k3d cluster delete rtmc
 	@echo "$(GREEN)k3d cluster stopped!$(RESET)"
 
+k3d-status:
+	@echo "$(CYAN)=== k3d Cluster Status ===$(RESET)"
+	@kubectl get pods -o wide
+	@echo ""
+	@echo "$(CYAN)=== Services ===$(RESET)"
+	@kubectl get svc
+
 k3d-logs:
+	@echo "$(YELLOW)Showing logs for all pods...$(RESET)"
+	@kubectl logs -l app.kubernetes.io/instance=rtmc --all-containers=true --tail=50
+
+k3d-logs-api:
 	@kubectl logs -f -l app.kubernetes.io/component=api
+
+k3d-logs-frontend:
+	@kubectl logs -f -l app.kubernetes.io/component=frontend
+
+k3d-logs-postgres:
+	@kubectl logs -f -l app.kubernetes.io/component=postgres
+
+k3d-logs-redis:
+	@kubectl logs -f -l app.kubernetes.io/component=redis
+
+k3d-logs-kafka:
+	@kubectl logs -f -l app.kubernetes.io/component=kafka
+
+k3d-logs-rabbitmq:
+	@kubectl logs -f -l app.kubernetes.io/component=rabbitmq
+
+k3d-logs-elasticsearch:
+	@kubectl logs -f -l app.kubernetes.io/component=elasticsearch
+
+k3d-logs-grafana:
+	@kubectl logs -f -l app.kubernetes.io/component=grafana
 
 k3d-clean:
 	@echo "$(YELLOW)Cleaning up k3d...$(RESET)"

@@ -93,6 +93,53 @@ rabbitmq:
       memory: "512Mi"
       cpu: "400m"
 
+elasticsearch:
+  enabled: true
+  image:
+    repository: docker.elastic.co/elasticsearch/elasticsearch
+    tag: 8.17.0
+    pullPolicy: IfNotPresent
+  auth:
+    password: elastic123
+  service:
+    type: ClusterIP
+    port: 9200
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+grafana:
+  enabled: true
+  image:
+    repository: grafana/grafana
+    tag: 11.5.0
+    pullPolicy: IfNotPresent
+  auth:
+    username: admin
+    password: admin123
+  service:
+    type: ClusterIP
+    port: 3000
+  persistence:
+    enabled: true
+    size: 500Mi
+    storageClass: ""
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
 api:
   enabled: true
   image:

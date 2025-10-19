@@ -78,8 +78,8 @@ make k3d-update      # Rebuild images and upgrade deployment
 
 Access points:
 - Frontend: http://localhost:30081
-- API: http://localhost:30080
-- Swagger: http://localhost:30080/swagger
+- API: http://localhost:8080
+- Swagger: http://localhost:8080/swagger
 
 ### Option 3: Local Development
 
