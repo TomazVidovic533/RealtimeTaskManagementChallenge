@@ -26,8 +26,10 @@ The system combines multiple technologies to create a cohesive, scalable solutio
 | Messaging | Kafka 3.8 | High-throughput event streaming |
 | Queue | RabbitMQ 4.0 | Reliable message delivery |
 | Real-time | SignalR | WebSocket communication |
-| Frontend | React | User interface |
-| Infrastructure | Docker | Containerization |
+| Search | Elasticsearch 8.17 | Full-text search and analytics |
+| Monitoring | Grafana 11.5 | Metrics visualization and dashboards |
+| Frontend | React 19 | User interface |
+| Infrastructure | Docker, k3d | Containerization and orchestration |
 
 ## System Flow
 
@@ -98,6 +100,8 @@ make frontend-dev
 | Kafka | localhost:9092 | - |
 | RabbitMQ AMQP | localhost:5672 | admin / password123 |
 | RabbitMQ Management | http://localhost:15672 | admin / password123 |
+| Elasticsearch | http://localhost:9200 | elastic / elastic123 |
+| Grafana | http://localhost:3000 | admin / admin123 |
 
 ## Commands
 
