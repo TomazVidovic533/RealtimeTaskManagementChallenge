@@ -69,8 +69,11 @@ Access points:
 ### Option 2: Kubernetes (k3d)
 
 ```bash
-make k3d-build       # Build and push images
-make k3d-start       # Create cluster and deploy services (includes frontend)
+# First time setup
+make k3d-start       # Create cluster and deploy all services
+
+# After making code changes
+make k3d-update      # Rebuild images and upgrade deployment
 ```
 
 Access points:
@@ -127,8 +130,8 @@ make docker-logs       # View logs
 make docker-clean      # Clean everything
 
 # Kubernetes (k3d)
-make k3d-build         # Build and push images
-make k3d-start         # Create cluster and deploy
+make k3d-start         # Create cluster and deploy (first time)
+make k3d-update        # Rebuild and upgrade (after code changes)
 make k3d-stop          # Stop cluster
 make k3d-logs          # View API logs
 make k3d-clean         # Full cleanup

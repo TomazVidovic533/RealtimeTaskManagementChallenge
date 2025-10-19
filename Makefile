@@ -1,4 +1,4 @@
-.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-build k3d-start k3d-stop k3d-logs k3d-clean
+.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-start k3d-update k3d-stop k3d-logs k3d-clean
 
 # Colors
 CYAN := \033[0;36m
@@ -26,8 +26,8 @@ help:
 	@echo "  make docker-clean     - Remove all containers and volumes"
 	@echo ""
 	@echo "$(YELLOW)Kubernetes (k3d):$(RESET)"
-	@echo "  make k3d-build        - Build and push images to k3d cluster"
-	@echo "  make k3d-start        - Create cluster and deploy all services"
+	@echo "  make k3d-start        - Create cluster and deploy all services (first time)"
+	@echo "  make k3d-update       - Rebuild images and upgrade deployment (after code changes)"
 	@echo "  make k3d-stop         - Stop and remove k3d cluster"
 	@echo "  make k3d-logs         - View API logs in k3d"
 	@echo "  make k3d-clean        - Full k3d cleanup"
@@ -102,16 +102,6 @@ docker-clean:
 	@echo "$(GREEN)Docker cleanup complete!$(RESET)"
 
 # Kubernetes (k3d) commands
-k3d-build:
-	@echo "$(YELLOW)Building images for k3d...$(RESET)"
-	@$(DOCKER_COMPOSE) build api frontend
-	@echo "$(YELLOW)Tagging and pushing to local registry...$(RESET)"
-	@docker tag rtmc-api:latest localhost:35000/rtmc/api:latest
-	@docker tag rtmc-frontend:latest localhost:35000/rtmc/frontend:latest
-	@docker push localhost:35000/rtmc/api:latest
-	@docker push localhost:35000/rtmc/frontend:latest
-	@echo "$(GREEN)Images ready for k3d!$(RESET)"
-
 k3d-start:
 	@echo "$(YELLOW)Starting k3d cluster...$(RESET)"
 	@uv run infrastructure/scripts/k8s/create.py
@@ -127,6 +117,23 @@ k3d-start:
 	@echo "$(CYAN)Useful commands:$(RESET)"
 	@echo "  kubectl get all       - View all resources"
 	@echo "  make k3d-logs         - View API logs"
+
+k3d-update:
+	@echo "$(YELLOW)Rebuilding images...$(RESET)"
+	@$(DOCKER_COMPOSE) build api frontend
+	@echo "$(YELLOW)Tagging and pushing to k3d registry...$(RESET)"
+	@docker tag rtmc-api:latest localhost:35000/rtmc/api:latest
+	@docker tag rtmc-frontend:latest localhost:35000/rtmc/frontend:latest
+	@docker push localhost:35000/rtmc/api:latest
+	@docker push localhost:35000/rtmc/frontend:latest
+	@echo "$(YELLOW)Upgrading Helm deployment...$(RESET)"
+	@helm upgrade rtmc infrastructure/helm/rtmc
+	@echo "$(YELLOW)Restarting pods to pick up new images...$(RESET)"
+	@kubectl rollout restart deployment/rtmc-api
+	@kubectl rollout restart deployment/rtmc-frontend
+	@kubectl rollout status deployment/rtmc-api
+	@kubectl rollout status deployment/rtmc-frontend
+	@echo "$(GREEN)Deployment updated successfully!$(RESET)"
 
 k3d-stop:
 	@echo "$(YELLOW)Stopping k3d cluster...$(RESET)"
