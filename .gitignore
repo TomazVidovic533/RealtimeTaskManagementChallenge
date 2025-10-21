@@ -41,6 +41,15 @@ bld/
 *.svclog
 *.scc
 
+# .NET build artifacts
+*.deps.json
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+project.assets.json
+project.fragment.lock.json
+artifacts/
+*.dgspec.json
+
 # Visual Studio cache/options
 .vs/
 .vscode/
