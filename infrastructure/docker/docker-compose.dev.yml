@@ -126,7 +126,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: ${COMPOSE_PROJECT_NAME}_api_dev
     ports:
-      - "${API_HTTP_PORT}:8080"  # Map host port to container port 8080
+      - "${API_HTTP_PORT}:5133"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
