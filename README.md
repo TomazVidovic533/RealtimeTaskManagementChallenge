@@ -54,7 +54,34 @@ User Action → API Endpoint → Domain Logic → Event Published
 
 ## Getting Started
 
-### Option 1: Docker (Recommended)
+### Option 1: Docker Development Mode (Recommended for Development)
+
+Hot reload enabled for both React and .NET - changes to your code will automatically trigger rebuilds!
+
+```bash
+make docker-dev-build    # Build dev images (first time only)
+make docker-dev-start    # Start dev environment with hot reload
+```
+
+Access points:
+- Frontend: http://localhost:3001 (Hot Reload)
+- API: http://localhost:8080 (Hot Reload)
+- Swagger: http://localhost:8080/swagger
+
+**How it works:**
+- **Frontend**: Edit files in `./frontend/src` and Vite will instantly reload your changes
+- **Backend**: Edit files in `./backend/src` and `dotnet watch` will rebuild and restart the API
+
+**Additional commands:**
+```bash
+make docker-dev-logs           # View all logs
+make docker-dev-logs-api       # View API logs only
+make docker-dev-logs-frontend  # View frontend logs only
+make docker-dev-stop           # Stop dev environment
+make docker-dev-clean          # Remove containers and volumes
+```
+
+### Option 2: Docker Production Mode
 
 ```bash
 make docker-build    # Build all Docker images
@@ -66,7 +93,7 @@ Access points:
 - API: http://localhost:8080
 - Swagger: http://localhost:8080/swagger
 
-### Option 2: Kubernetes (k3d)
+### Option 3: Kubernetes (k3d)
 
 ```bash
 # First time setup
@@ -81,7 +108,7 @@ Access points:
 - API: http://localhost:8080
 - Swagger: http://localhost:8080/swagger
 
-### Option 3: Local Development
+### Option 4: How to Run
 
 **Backend:**
 ```bash
@@ -122,12 +149,21 @@ make backend-test      # Run tests
 make frontend-install  # Install frontend dependencies
 make frontend-dev      # Start frontend dev server
 
-# Docker
+# Docker (Production)
 make docker-build      # Build all Docker images
 make docker-start      # Start all services
 make docker-stop       # Stop services
 make docker-logs       # View logs
 make docker-clean      # Clean everything
+
+# Docker (Development with Hot Reload)
+make docker-dev-build  # Build dev images
+make docker-dev-start  # Start dev environment with hot reload
+make docker-dev-stop   # Stop dev environment
+make docker-dev-logs   # View all dev logs
+make docker-dev-logs-api       # View API logs only
+make docker-dev-logs-frontend  # View frontend logs only
+make docker-dev-clean  # Clean dev environment
 
 # Kubernetes (k3d)
 make k3d-start         # Create cluster and deploy (first time)

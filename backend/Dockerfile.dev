@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0
+
+WORKDIR /src
+
+# Copy csproj files and restore dependencies
+COPY ["src/TaskManagement.API/TaskManagement.API.csproj", "src/TaskManagement.API/"]
+COPY ["src/TaskManagement.Shared/TaskManagement.Shared.csproj", "src/TaskManagement.Shared/"]
+COPY ["src/Features/Tasks/Tasks.csproj", "src/Features/Tasks/"]
+COPY ["src/Features/Users/Users.csproj", "src/Features/Users/"]
+COPY ["src/Features/Teams/Teams.csproj", "src/Features/Teams/"]
+COPY ["src/Features/Comments/Comments.csproj", "src/Features/Comments/"]
+COPY ["src/Features/Notifications/Notifications.csproj", "src/Features/Notifications/"]
+
+RUN dotnet restore "src/TaskManagement.API/TaskManagement.API.csproj"
+
+# Copy the rest of the source code (will be overridden by volume mount)
+COPY src/ ./src/
+
+EXPOSE 8080
+
+# Use dotnet watch for hot reload
+ENTRYPOINT ["dotnet", "watch", "run", "--project", "src/TaskManagement.API/TaskManagement.API.csproj"]

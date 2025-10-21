@@ -7,6 +7,7 @@ YELLOW := \033[0;33m
 RESET := \033[0m
 
 DOCKER_COMPOSE := docker-compose -f infrastructure/docker/docker-compose.yml --env-file .env
+DOCKER_COMPOSE_DEV := docker-compose -f infrastructure/docker/docker-compose.dev.yml --env-file .env
 
 help:
 	@echo "$(CYAN)=== Real-Time Task Management ===$(RESET)"
@@ -18,12 +19,21 @@ help:
 	@echo "  make frontend-install - Install frontend dependencies"
 	@echo "  make frontend-dev     - Run frontend dev server"
 	@echo ""
-	@echo "$(YELLOW)Docker:$(RESET)"
+	@echo "$(YELLOW)Docker (Production):$(RESET)"
 	@echo "  make docker-build     - Build all Docker images (backend + frontend)"
 	@echo "  make docker-start     - Start all services with Docker Compose"
 	@echo "  make docker-stop      - Stop Docker services"
 	@echo "  make docker-logs      - View Docker logs"
 	@echo "  make docker-clean     - Remove all containers and volumes"
+	@echo ""
+	@echo "$(YELLOW)Docker (Development with Hot Reload):$(RESET)"
+	@echo "  make docker-dev-build - Build dev images with hot reload"
+	@echo "  make docker-dev-start - Start dev environment with hot reload"
+	@echo "  make docker-dev-stop  - Stop dev environment"
+	@echo "  make docker-dev-logs  - View all dev logs"
+	@echo "  make docker-dev-logs-api      - View API logs only"
+	@echo "  make docker-dev-logs-frontend - View frontend logs only"
+	@echo "  make docker-dev-clean - Remove dev containers and volumes"
 	@echo ""
 	@echo "$(YELLOW)Kubernetes (k3d) with Linkerd Service Mesh:$(RESET)"
 	@echo "  make k3d-start        - Create cluster with Linkerd + Ingress (all-in-one)"
@@ -107,6 +117,55 @@ docker-clean:
 	@echo "$(YELLOW)Cleaning up Docker containers and volumes...$(RESET)"
 	@$(DOCKER_COMPOSE) down -v
 	@echo "$(GREEN)Docker cleanup complete!$(RESET)"
+
+# Docker Development Mode (with hot reload)
+docker-dev-build:
+	@echo "$(YELLOW)Building Docker dev images...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) build
+	@echo "$(GREEN)Docker dev images built successfully!$(RESET)"
+
+docker-dev-start:
+	@echo "$(YELLOW)Starting development environment with hot reload...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) up -d
+	@echo "$(YELLOW)Waiting for services to be healthy...$(RESET)"
+	@sleep 5
+	@echo "$(GREEN)Development environment started!$(RESET)"
+	@echo ""
+	@echo "$(CYAN)Access points:$(RESET)"
+	@echo "  $(YELLOW)Frontend (Vite):$(RESET) http://localhost:3001 (Hot Reload Enabled)"
+	@echo "  $(YELLOW)API (.NET):$(RESET)      http://localhost:8080 (Hot Reload Enabled)"
+	@echo "  $(YELLOW)Swagger:$(RESET)         http://localhost:8080/swagger"
+	@echo "  $(YELLOW)RabbitMQ:$(RESET)        http://localhost:15672 (admin / password123)"
+	@echo "  $(YELLOW)Grafana:$(RESET)         http://localhost:3000 (admin / admin123)"
+	@echo "  $(YELLOW)Elasticsearch:$(RESET)   http://localhost:9200 (elastic / elastic123)"
+	@echo "  $(YELLOW)PostgreSQL:$(RESET)      localhost:5432 (admin / password123)"
+	@echo "  $(YELLOW)Redis:$(RESET)           localhost:6379"
+	@echo "  $(YELLOW)Kafka:$(RESET)           localhost:9092"
+	@echo ""
+	@echo "$(GREEN)Hot Reload:$(RESET)"
+	@echo "  - Frontend: Edit files in ./frontend/src and changes will reload automatically"
+	@echo "  - Backend: Edit files in ./backend/src and the API will rebuild automatically"
+
+docker-dev-stop:
+	@echo "$(YELLOW)Stopping development environment...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) stop
+	@echo "$(GREEN)Development environment stopped!$(RESET)"
+
+docker-dev-logs:
+	@$(DOCKER_COMPOSE_DEV) logs -f
+
+docker-dev-logs-api:
+	@echo "$(YELLOW)Showing API logs (hot reload enabled)...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) logs -f api
+
+docker-dev-logs-frontend:
+	@echo "$(YELLOW)Showing Frontend logs (hot reload enabled)...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) logs -f frontend
+
+docker-dev-clean:
+	@echo "$(YELLOW)Cleaning up development environment...$(RESET)"
+	@$(DOCKER_COMPOSE_DEV) down -v
+	@echo "$(GREEN)Development environment cleaned!$(RESET)"
 
 # Kubernetes (k3d) commands
 k3d-start:
