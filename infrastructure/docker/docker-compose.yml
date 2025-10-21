@@ -1,3 +1,4 @@
+
 services:
   postgres:
     image: postgres:${POSTGRES_VERSION}
@@ -153,7 +154,7 @@ services:
       dockerfile: Dockerfile
     container_name: ${COMPOSE_PROJECT_NAME}_frontend
     ports:
-      - "${FRONTEND_PORT}:80"
+      - "${FRONTEND_PORT}:3001"
     depends_on:
       - api
     networks:

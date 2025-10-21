@@ -50,25 +50,8 @@ def main():
         console.print("[red]Failed to install Helm chart[/red]")
         sys.exit(1)
 
-    console.print("[green]Helm chart installed![/green]\n")
-    console.print("[yellow]Waiting for all pods to be ready (may take 2-3 minutes for first-time image pulls)...[/yellow]")
-
-    result = subprocess.run([
-        "kubectl", "wait", "--for=condition=ready", "pod",
-        "-l", "app.kubernetes.io/instance=rtmc",
-        "--timeout=300s"
-    ])
-
-    if result.returncode != 0:
-        console.print("[red]Timeout waiting for pods to be ready[/red]")
-        console.print("[yellow]Check status with: make k3d-status[/yellow]")
-        sys.exit(1)
-
-    console.print("[green]All pods are ready![/green]\n")
-    subprocess.run(["kubectl", "get", "pods"])
-
-    console.print("\n[cyan]Access API:[/cyan]")
-    console.print("  [blue]curl http://localhost:8080/weatherforecast[/blue]\n")
+    console.print("[green]✓ Helm chart installed![/green]")
+    console.print("[dim]Pods are starting in the background...[/dim]\n")
 
 if __name__ == "__main__":
     main()

@@ -17,13 +17,8 @@ def main():
     result = subprocess.run([
         "k3d", "cluster", "create", "rtmc",
         "--registry-create", "rtmc-registry:0.0.0.0:35000",
-        "--port", "8080:8080@loadbalancer",
-        "--port", "3001:30081@server:0",
-        "--port", "5432:5432@loadbalancer",
-        "--port", "6379:6379@loadbalancer",
-        "--port", "9092:9092@loadbalancer",
-        "--port", "5672:5672@loadbalancer",
-        "--port", "15672:15672@loadbalancer"
+        "--port", "80:80@loadbalancer",
+        "--port", "443:443@loadbalancer"
     ])
 
     if result.returncode != 0:

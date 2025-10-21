@@ -14,6 +14,10 @@ spec:
       app.kubernetes.io/component: frontend
   template:
     metadata:
+      annotations:
+        {{- if .Values.linkerd.enabled }}
+        linkerd.io/inject: {{ .Values.linkerd.inject }}
+        {{- end }}
       labels:
         {{- include "rtmc.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: frontend
@@ -22,12 +26,9 @@ spec:
       - name: frontend
         image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
         imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
-        env:
-        - name: API_HOST
-          value: {{ include "rtmc.fullname" . }}-api
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 3001
           protocol: TCP
         resources:
           {{- toYaml .Values.frontend.resources | nindent 10 }}

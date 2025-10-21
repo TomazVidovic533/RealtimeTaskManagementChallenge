@@ -33,6 +33,10 @@ spec:
           value: {{ .Values.grafana.auth.password | quote }}
         - name: GF_INSTALL_PLUGINS
           value: "grafana-clock-panel"
+        - name: GF_SERVER_ROOT_URL
+          value: "http://localhost/grafana"
+        - name: GF_SERVER_SERVE_FROM_SUB_PATH
+          value: "true"
         {{- if .Values.grafana.persistence.enabled }}
         volumeMounts:
         - name: data

@@ -1,4 +1,4 @@
-.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-start k3d-update k3d-stop k3d-status k3d-logs k3d-logs-api k3d-logs-frontend k3d-logs-postgres k3d-logs-redis k3d-logs-kafka k3d-logs-rabbitmq k3d-logs-elasticsearch k3d-logs-grafana k3d-clean
+.PHONY: help status backend-build backend-run backend-test frontend-install frontend-dev frontend-build docker-build docker-start docker-stop docker-logs docker-clean k3d-start k3d-update k3d-stop k3d-status k3d-logs k3d-logs-api k3d-logs-frontend k3d-logs-postgres k3d-logs-redis k3d-logs-kafka k3d-logs-rabbitmq k3d-logs-elasticsearch k3d-logs-grafana k3d-clean linkerd-dashboard linkerd-check linkerd-tap
 
 # Colors
 CYAN := \033[0;36m
@@ -25,14 +25,19 @@ help:
 	@echo "  make docker-logs      - View Docker logs"
 	@echo "  make docker-clean     - Remove all containers and volumes"
 	@echo ""
-	@echo "$(YELLOW)Kubernetes (k3d):$(RESET)"
-	@echo "  make k3d-start        - Create cluster and deploy all services (first time)"
-	@echo "  make k3d-update       - Rebuild images and upgrade deployment (after code changes)"
-	@echo "  make k3d-status       - View k3d cluster status"
-	@echo "  make k3d-logs         - View all pod logs in k3d"
-	@echo "  make k3d-logs-<svc>   - View specific service logs (api, frontend, postgres, etc.)"
-	@echo "  make k3d-stop         - Stop and remove k3d cluster"
-	@echo "  make k3d-clean        - Full k3d cleanup"
+	@echo "$(YELLOW)Kubernetes (k3d) with Linkerd Service Mesh:$(RESET)"
+	@echo "  make k3d-start        - Create cluster with Linkerd + Ingress (all-in-one)"
+	@echo "  make k3d-update       - Rebuild images and upgrade deployment"
+	@echo "  make k3d-status       - View cluster status"
+	@echo "  make k3d-logs         - View all pod logs"
+	@echo "  make k3d-logs-<svc>   - View specific service logs"
+	@echo "  make k3d-stop         - Stop and remove cluster"
+	@echo "  make k3d-clean        - Full cleanup"
+	@echo ""
+	@echo "$(YELLOW)Monitoring (after k3d-start):$(RESET)"
+	@echo "  make linkerd-dashboard - Open Linkerd dashboard (auto-opens browser)"
+	@echo "  make linkerd-check     - Verify Linkerd health"
+	@echo "  make linkerd-tap       - Live traffic monitoring"
 	@echo ""
 	@echo "$(YELLOW)Other:$(RESET)"
 	@echo "  make status           - Check service status"
@@ -105,21 +110,30 @@ docker-clean:
 
 # Kubernetes (k3d) commands
 k3d-start:
-	@echo "$(YELLOW)Starting k3d cluster...$(RESET)"
+	@echo "$(YELLOW)Starting k3d cluster with Linkerd service mesh...$(RESET)"
 	@uv run infrastructure/scripts/k8s/create.py
-	@echo "$(YELLOW)Deploying services to k3d...$(RESET)"
+	@echo "$(YELLOW)Installing Linkerd...$(RESET)"
+	@uv run infrastructure/scripts/k8s/install_linkerd.py
+	@echo "$(YELLOW)Deploying services...$(RESET)"
 	@uv run infrastructure/scripts/helm/install.py
-	@echo "$(GREEN)k3d cluster started and services deployed!$(RESET)"
+	@echo "$(GREEN)✓ k3d cluster ready with Linkerd + Traefik!$(RESET)"
 	@echo ""
-	@echo "$(CYAN)Access points:$(RESET)"
-	@echo "  $(YELLOW)Frontend:$(RESET)    http://localhost:3001"
-	@echo "  $(YELLOW)API:$(RESET)         http://localhost:8080"
-	@echo "  $(YELLOW)Swagger:$(RESET)     http://localhost:8080/swagger"
+	@echo "$(CYAN)╔══════════════════════════════════════════════════════════════════════╗$(RESET)"
+	@echo "$(CYAN)║                         ACCESS POINTS                                ║$(RESET)"
+	@echo "$(CYAN)╠══════════════════════════════════════════════════════════════════════╣$(RESET)"
+	@echo "$(CYAN)║$(RESET) $(YELLOW)Service$(RESET)           │ $(YELLOW)URL$(RESET)                                  │ $(YELLOW)Credentials$(RESET)        $(CYAN)║$(RESET)"
+	@echo "$(CYAN)╠══════════════════════════════════════════════════════════════════════╣$(RESET)"
+	@echo "$(CYAN)║$(RESET) Frontend          │ http://localhost                     │ -                  $(CYAN)║$(RESET)"
+	@echo "$(CYAN)║$(RESET) API               │ http://localhost/api/weatherforecast │ -                  $(CYAN)║$(RESET)"
+	@echo "$(CYAN)║$(RESET) Swagger           │ http://localhost/api/swagger         │ -                  $(CYAN)║$(RESET)"
+	@echo "$(CYAN)║$(RESET) Grafana           │ http://localhost/grafana             │ admin / admin123   $(CYAN)║$(RESET)"
+	@echo "$(CYAN)║$(RESET) Linkerd Dashboard │ make linkerd-dashboard               │ Auto-opens browser $(CYAN)║$(RESET)"
+	@echo "$(CYAN)╚══════════════════════════════════════════════════════════════════════╝$(RESET)"
 	@echo ""
 	@echo "$(CYAN)Useful commands:$(RESET)"
-	@echo "  kubectl get all       - View all resources"
-	@echo "  make k3d-status       - View cluster status"
-	@echo "  make k3d-logs         - View all pod logs"
+	@echo "  $(YELLOW)make k3d-status$(RESET)        - View cluster status"
+	@echo "  $(YELLOW)make k3d-logs$(RESET)          - View all pod logs"
+	@echo "  $(YELLOW)make linkerd-dashboard$(RESET) - Open monitoring dashboard"
 
 k3d-update:
 	@echo "$(YELLOW)Rebuilding images...$(RESET)"
@@ -183,6 +197,16 @@ k3d-clean:
 	@k3d cluster delete rtmc 2>/dev/null || true
 	@echo "$(GREEN)k3d cleanup complete!$(RESET)"
 
-# Status command
+linkerd-dashboard:
+	@uv run infrastructure/scripts/linkerd/dashboard.py
+
+linkerd-check:
+	@echo "$(YELLOW)Checking Linkerd health...$(RESET)"
+	@~/.linkerd2/bin/linkerd check
+
+linkerd-tap:
+	@echo "$(YELLOW)Live traffic monitoring (Ctrl+C to stop)...$(RESET)"
+	@~/.linkerd2/bin/linkerd viz tap deploy
+
 status:
 	@uv run infrastructure/scripts/status.py

@@ -2,6 +2,10 @@ global:
   environment: development
   namespace: rtmc
 
+linkerd:
+  enabled: true
+  inject: enabled
+
 postgres:
   enabled: true
   image:
@@ -148,7 +152,7 @@ api:
     pullPolicy: Always
   replicas: 1
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8080
   env:
     aspnetcoreEnvironment: Development
@@ -168,9 +172,8 @@ frontend:
     pullPolicy: Always
   replicas: 1
   service:
-    type: NodePort
-    port: 80
-    nodePort: 30081
+    type: ClusterIP
+    port: 3001
   resources:
     requests:
       memory: "64Mi"
@@ -180,8 +183,8 @@ frontend:
       cpu: "100m"
 
 ingress:
-  enabled: false
-  className: nginx
+  enabled: true
+  className: traefik
   annotations: {}
   hosts:
     - host: rtmc.local
